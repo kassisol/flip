@@ -1,0 +1,5 @@
+.dapper
+.github-release
+*.swp
+bin/
+dist/
