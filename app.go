@@ -26,7 +26,8 @@ func runApp(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	for {
+	ticker1 := time.NewTicker(time.Second * time.Duration(30))
+	for _ = range ticker1.C {
 		if err := d.IsAvailable(); err != nil {
 			log.Error(err)
 		}
@@ -40,13 +41,15 @@ func runApp(cmd *cobra.Command, args []string) {
 		break
 	}
 
+	ticker1.Stop()
+
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, os.Interrupt)
 	signal.Notify(ch, syscall.SIGTERM)
 
-	ticker := time.NewTicker(time.Second * time.Duration(cmdKeepalive))
+	ticker2 := time.NewTicker(time.Second * time.Duration(cmdKeepalive))
 	go func(nic string, ipaddr *driver.IP) {
-		for _ = range ticker.C {
+		for _ = range ticker2.C {
 			d, err := docker.NewDockerClient()
 			if err != nil {
 				log.Error(err)
@@ -104,6 +107,6 @@ func runApp(cmd *cobra.Command, args []string) {
 	}(cmdInterface, i)
 
 	s := <-ch
-	ticker.Stop()
+	ticker2.Stop()
 	log.Infof("Processing signal '%s'", s)
 }
