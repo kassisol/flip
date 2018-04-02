@@ -17,7 +17,7 @@ type DockerConfig struct {
 func NewDockerClient() (*DockerConfig, error) {
 	cli, err := client.NewEnvClient()
 	if err != nil {
-		return &DockerConfig{}, err
+		return nil, err
 	}
 
 	return &DockerConfig{Client: cli}, nil
