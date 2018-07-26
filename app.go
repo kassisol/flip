@@ -67,6 +67,11 @@ func runApp(cmd *cobra.Command, args []string) {
 				continue
 			}
 
+			if err := d.Close(); err != nil {
+				log.Error(err)
+				continue
+			}
+
 			if service {
 				// Check if IP is already set
 				i := ip.NewIP(nic, ipaddr.Address, ipaddr.Netmask)

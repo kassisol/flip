@@ -23,6 +23,10 @@ func NewDockerClient() (*DockerConfig, error) {
 	return &DockerConfig{Client: cli}, nil
 }
 
+func (c *DockerConfig) Close() error {
+	return c.Client.Close()
+}
+
 func (c *DockerConfig) GetNodeID() error {
 	info, err := c.Client.Info(context.Background())
 	if err != nil {
