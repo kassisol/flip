@@ -1,6 +1,6 @@
 [Unit]
 Description=Floating IP management for Docker Swarm
-After=network.target
+After=docker.service
 
 [Service]
 Type=simple
