@@ -88,10 +88,11 @@ func (c *Config) IsAvailable() error {
 	}
 
 	cc := &client.Config{
-		Scheme: u.Scheme,
-		Host:   u.Host,
-		Port:   u.Port,
-		Path:   "/metadata/v1/",
+		Scheme:  u.Scheme,
+		Host:    u.Host,
+		Port:    u.Port,
+		Path:    "/metadata/v1/",
+		Timeout: 10,
 	}
 
 	cli, err := client.New(cc)
